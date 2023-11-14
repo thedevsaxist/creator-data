@@ -1,13 +1,16 @@
 import json
 from requests_oauthlib import OAuth1Session
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # this adds our API_key and secrets to the environment variable
-# consumer_key = os.environ.get("CONSUMER_KEY")
-# consumer_secret = os.environ.get("CONSUMER_SECRET")
+consumer_key = os.environ.get('CONSUMER_KEY')
+consumer_secret = os.environ.get('CONSUMER_SECRETS')
 
-consumer_key = "DbzPC6h5VLiBu89BEHkibfBMC"
-consumer_secret = "uTWlhfXp8DPTGpGEQicR9BgHbIuBimwhTnz2WHtRN7zAFrVxRc"
+# consumer_key = "DbzPC6h5VLiBu89BEHkibfBMC"
+# consumer_secret = "uTWlhfXp8DPTGpGEQicR9BgHbIuBimwhTnz2WHtRN7zAFrVxRc"
 
 
 # these are optional parameters that we are passing into the endpoint
