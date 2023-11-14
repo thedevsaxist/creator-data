@@ -6,11 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # this adds our API_key and secrets to the environment variable
-consumer_key = os.environ.get('CONSUMER_KEY')
-consumer_secret = os.environ.get('CONSUMER_SECRETS')
-
-# consumer_key = "DbzPC6h5VLiBu89BEHkibfBMC"
-# consumer_secret = "uTWlhfXp8DPTGpGEQicR9BgHbIuBimwhTnz2WHtRN7zAFrVxRc"
+consumer_key = os.environ.get("CONSUMER_KEY")
+consumer_secret = os.environ.get("CONSUMER_SECRETS")
 
 
 # these are optional parameters that we are passing into the endpoint
@@ -32,7 +29,7 @@ except ValueError:
 
 resource_owner_key = fetch_response.get("oauth_token")
 resource_owner_secret = fetch_response.get("oauth_token_secret")
-print(f"Got OAuth token: {resource_owner_key}")
+# print(f"Got OAuth token: {resource_owner_key} \nOAuth token secret: {resource_owner_secret}")
 
 # Get authorization
 base_authorization_url = "https://api.twitter.com/oauth/authorize"
@@ -49,10 +46,19 @@ oauth = OAuth1Session(
     resource_owner_secret=resource_owner_secret,
     verifier=verifier,
 )
-oauth_tokens = oauth.fetch_access_token(access_token_url)
+
+try:
+    oauth_tokens = oauth.fetch_access_token(access_token_url)
+    print(f"\nThis is the access token that was fetched: {oauth_tokens}")
+except ValueError:
+    print(
+        "!!!!!!!!!!!!!!!!!!\nThere may have been an issue with the access token you entered.\n"
+    )
 
 access_token = oauth_tokens["oauth_token"]
 access_token_secret = oauth_tokens["oauth_token_secret"]
+
+# print(f"\nAccess token: {access_token} \nAccess token secret: {access_token_secret}")
 
 # Make the request
 oauth = OAuth1Session(
@@ -78,4 +84,4 @@ json_response = response.json()
 print(json.dumps(json_response, indent=4, sort_keys=True))
 
 
-#TODO: Debug this to find out why you're getting a 401 error
+# TODO: Debug this to find out why you're getting a 401 error
